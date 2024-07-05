@@ -1,0 +1,41 @@
+
+#spring:
+#  application:
+#    name: ms-product
+#  config:
+#    import: configserver:http://localhost:8086
+#  profiles:
+#    active: default
+
+server:
+  port: 8080
+
+spring:
+  cloud:
+    config:
+      enabled: false
+      import-check:
+        enabled: false
+  application:
+    name: ms-product
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+
+openapi:
+  info:
+    github:
+      url: https://github.com/lujose421/Customer
+    terms: http://swagger.io/terms/
+    contact:
+      name: Joseph Carlos Magallanes Nolazco
+      email: josephcarlos.jcmn@gmail.com
+      url: https://www.linkedin.com/in/joseph-magallanes-nolazco/
+    servers:
+      url: http://localhost:8080
+      description: Local server Swagger
+
+springdoc:
+  swagger-ui:
+    #    enabled: true
+    path: index.html

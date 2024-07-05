@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Swagger Project - OpenAPI 3.0
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Customer
+    description: Operations about customer
+paths:
+  /api/v1/customer:
+    get:
+      tags:
+        - Customer
+      summary: Get customer
+      description: CustomerEntity list from mongoDB.
+      operationId: getCustomer
+      responses:
+        200:
+          description: success get
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerResponse'
+
+    post:
+      tags:
+        - Customer
+      summary: Create customer
+      description: Creation of customer in mongoDB database.
+      operationId: createCustomer
+      requestBody:
+        description: Created customer object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+        required: true
+      responses:
+        201:
+          description: success created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+
+  /api/v1/customer/{id}:
+    get:
+      tags:
+        - Customer
+      summary: Get customer by id
+      description: Get customer.
+      operationId: getCustomerById
+      parameters:
+        - name: id
+          in: path
+          description: find by id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: success get
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+
+    put:
+      tags:
+        - Customer
+      summary: Update customer by id
+      description: Update customer.
+      operationId: updateCustomerById
+      parameters:
+        - name: id
+          in: path
+          description: id that need to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent user in the mongoDB
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+        required: true
+      responses:
+        200:
+          description: success updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+    delete:
+      tags:
+        - Customer
+      summary: Delete customer by id
+      description: Delete an existent customer in the database mongoDB.
+      operationId: deleteCustomerById
+      parameters:
+        - name: id
+          in: path
+          description: The id that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: success delete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseDTO'
+        404:
+          description: CustomerEntity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseDTO'
+components:
+  schemas:
+    CustomerRequest:
+      required:
+        - name
+        - lastName
+        - documentType
+        - documentNumber
+        - clientType
+      type: object
+      properties:
+        name:
+          type: string
+          example: John
+          pattern: '^[A-Za-z]+$'
+        lastName:
+          type: string
+          example: James
+          pattern: '^[A-Za-z]+$'
+        reason:
+          type: string
+          example: 'EMPRESA TRANSPORTE SAC'
+        documentType:
+          type: string
+          enum:
+            - DNI
+            - RUC
+          example: DNI
+        documentNumber:
+          type: string
+          example: '45871236'
+          pattern: '^[0-9]+$'
+        clientType:
+          type: string
+          enum:
+            - STAFF
+            - BUSINESS
+          example: STAFF
+    CustomerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '6680e3e7878a8f7d4d998569'
+        name:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        reason:
+          type: string
+          example: 'EMPRESA TRANSPORTE SAC'
+        documentType:
+          type: string
+          enum:
+            - DNI
+            - RUC
+          example: DNI
+        documentNumber:
+          type: string
+          example: '45871236'
+        clientType:
+          type: string
+          enum:
+            - STAFF
+            - BUSINESS
+          example: STAFF
+    ResponseDTO:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Message response'
