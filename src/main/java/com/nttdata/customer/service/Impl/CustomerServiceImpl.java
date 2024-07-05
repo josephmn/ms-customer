@@ -8,8 +8,7 @@ import com.nttdata.customer.exception.types.NotFoundException;
 import com.nttdata.customer.pesistence.repository.CustomerRepository;
 import com.nttdata.customer.service.CustomerService;
 import com.nttdata.customer.utils.AppUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,88 +16,83 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
-
     @Override
     public Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer() {
-        logger.info("service customerRepository - ini");
+        log.info("service customerRepository - ini");
 
         Flux<CustomerResponse> customerDTOFlux = this.customerRepository.findAll()
-                .doOnError(error -> logger.error("Error getAllCustomer: ", error))
+                .doOnError(error -> log.error("Error getAllCustomer: ", error))
                 .map(AppUtils::entityToDto)
-                .doOnTerminate(() -> logger.info("service customerRepository - end"));
+                .doOnTerminate(() -> log.info("service customerRepository - end"));
 
         return Mono.just(ResponseEntity.ok(customerDTOFlux));
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> getCustomerById(String id) {
-        logger.info("service getCustomerById - ini");
+        log.info("service getCustomerById - ini");
 
         return this.customerRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException("CustomerEntity with ID %s does not exist", id)))
-                .doOnNext(customerEntity -> logger.info("customerEntity by id service: {}", customerEntity))
+                .doOnNext(customerEntity -> log.info("customerEntity by id service: {}", customerEntity))
                 .flatMap(customerEntity -> Mono.just(ResponseEntity.ok(AppUtils.entityToDto(customerEntity))))
-                .doOnTerminate(() -> logger.info("service getCustomerById - end"));
+                .doOnTerminate(() -> log.info("service getCustomerById - end"));
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> createCustomer(CustomerRequest customerRequest) {
-        logger.info("service createCustomer - ini");
+        log.info("service createCustomer - ini");
 
         String documentNumber = customerRequest.getDocumentNumber();
         return this.customerRepository.findByDocumentNumber(documentNumber)
                 .flatMap(existingCustomer -> {
-                    // Customer exist, return error.
                     return Mono.error(new CustomerAlreadyExistsException(
                             "Customer exist with document number: %s", customerRequest.getDocumentNumber()));
                 })
                 .switchIfEmpty(Mono.defer(() -> {
-                    // Customer not exist, return 201 created.
                     return Mono.just(customerRequest)
                             .map(AppUtils::dtoToEntity)
-                            .doOnNext(customerBefore -> logger.info("customer before create: {}", customerBefore))
+                            .doOnNext(customerBefore -> log.info("customer before create: {}", customerBefore))
                             .flatMap(this.customerRepository::insert)
                             .map(AppUtils::entityToDto)
                             .map(dto -> ResponseEntity.status(HttpStatus.CREATED).body(dto))
-                            .doOnNext(customerAfter -> logger.info("customer after create: {}", customerAfter));
+                            .doOnNext(customerAfter -> log.info("customer after create: {}", customerAfter));
                 }))
                 .cast(ResponseEntity.class)
                 .map(responseEntity -> (ResponseEntity<CustomerResponse>) responseEntity)
-                .doOnTerminate(() -> logger.info("service createCustomer - end"));
+                .doOnTerminate(() -> log.info("service createCustomer - end"));
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> updateCustomerById(String id, CustomerRequest customerRequest) {
-        logger.info("service updateCustomerById - ini");
+        log.info("service updateCustomerById - ini");
 
         return this.customerRepository.findById(id)
                 .switchIfEmpty(Mono.defer(() -> {
-                    // Customer not exist, return error.
                     return Mono.error(new NotFoundException("Customer not exist with document number: %s", id));
                 }))
                 .flatMap(existCustomer -> Mono.just(customerRequest)
                         .map(request -> {
                             var customerEntity = AppUtils.dtoToEntity(request);
-                            // Set the ID of customer entity to updated
                             customerEntity.setId(id);
                             return customerEntity;
                         })
                         .flatMap(this.customerRepository::save)
                         .map(AppUtils::entityToDto)
                         .map(dto -> ResponseEntity.status(HttpStatus.OK).body(dto)))
-                .doOnTerminate(() -> logger.info("service updateCustomerById - end"));
+                .doOnTerminate(() -> log.info("service updateCustomerById - end"));
     }
 
     @Override
     public Mono<ResponseEntity<ResponseDTO>> deleteCustomerById(String id) {
-        logger.info("service deleteCustomerById - ini");
+        log.info("service deleteCustomerById - ini");
 
         return this.customerRepository.existsById(id)
                 .flatMap(exist -> {

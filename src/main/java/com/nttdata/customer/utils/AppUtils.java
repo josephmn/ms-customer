@@ -12,6 +12,10 @@ import java.util.Map;
 
 public class AppUtils {
 
+    private AppUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static CustomerResponse entityToDto(CustomerEntity customer) {
         CustomerResponse customerResponse = new CustomerResponse();
         customerResponse.setId(customer.getId());

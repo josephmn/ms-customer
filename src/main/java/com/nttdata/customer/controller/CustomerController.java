@@ -24,8 +24,6 @@ public class CustomerController implements CustomerApi {
     @Autowired
     private CustomerService customerService;
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
-
     @Override
     public Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer(ServerWebExchange exchange) {
         return this.customerService.getCustomer();
