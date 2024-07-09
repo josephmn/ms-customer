@@ -35,27 +35,17 @@ class MsCustomerApplicationTests {
 	private CustomerResponse customer2;
 	private Flux<CustomerResponse> customerResponseFlux;
 
+	private static final String CUSTOMER_API = "/api/v1/customer";
+	private static final String CUSTOMER_ID = "123456788";
+	private static final String NON_EXISTENT_CUSTOMER_ID = "123456799";
+	private static final String NOT_FOUND_MESSAGE = String.format("Customer with ID %s does not exist", NON_EXISTENT_CUSTOMER_ID);
+
 	@BeforeEach
-	public void Setup() {
-
-		customer1 = new CustomerResponse();
-		customer1.setId("123456788");
-		customer1.setName("Juan Pepe");
-		customer1.setLastName("Vasquez Perez");
-		customer1.setReason("");
-		customer1.setDocumentType(CustomerResponse.DocumentTypeEnum.DNI);
-		customer1.setDocumentNumber("12345678");
-		customer1.setClientType(CustomerResponse.ClientTypeEnum.STAFF);
-
-		customer2 = new CustomerResponse();
-		customer2.setId("123456789");
-		customer2.setName("");
-		customer2.setLastName("");
-		customer2.setReason("EMPRESA DE TRANSPORTE SA");
-		customer2.setDocumentType(CustomerResponse.DocumentTypeEnum.RUC);
-		customer2.setDocumentNumber("203145698745");
-		customer2.setClientType(CustomerResponse.ClientTypeEnum.BUSINESS);
-
+	public void setup() {
+		customer1 = createCustomerResponse("123456788", "Juan Pepe", "Vasquez Perez", "",
+				CustomerResponse.DocumentTypeEnum.DNI, "12345678", CustomerResponse.ClientTypeEnum.STAFF);
+		customer2 = createCustomerResponse("123456789", "", "", "EMPRESA DE TRANSPORTE SA",
+				CustomerResponse.DocumentTypeEnum.RUC, "203145698745", CustomerResponse.ClientTypeEnum.BUSINESS);
 		customerResponseFlux = Flux.just(customer1, customer2);
 	}
 
@@ -64,7 +54,7 @@ class MsCustomerApplicationTests {
 	public void getCustomerTest() {
 		when(service.getCustomer()).thenReturn(Mono.just(ResponseEntity.ok(customerResponseFlux)));
 
-		webTestClient.get().uri("/api/v1/customer")
+		webTestClient.get().uri(CUSTOMER_API)
 				.exchange()
 				.expectStatus().isOk()
 				.expectBodyList(CustomerResponse.class)
@@ -77,7 +67,7 @@ class MsCustomerApplicationTests {
 	public void getCustomerEmptyTest() {
 		when(service.getCustomer()).thenReturn(Mono.just(ResponseEntity.ok(Flux.empty())));
 
-		webTestClient.get().uri("/api/v1/customer")
+		webTestClient.get().uri(CUSTOMER_API)
 				.exchange()
 				.expectStatus().isOk()
 				.expectBodyList(CustomerResponse.class);
@@ -86,90 +76,71 @@ class MsCustomerApplicationTests {
 	@Test
 	@DisplayName("method get customer by id test")
 	public void getCustomerByIdTest() {
-		CustomerResponse expectedCustomer = customer1;
-		when(service.getCustomerById(expectedCustomer.getId())).thenReturn(Mono.just(ResponseEntity.ok(expectedCustomer)));
+		when(service.getCustomerById(CUSTOMER_ID)).thenReturn(Mono.just(ResponseEntity.ok(customer1)));
 
-		webTestClient.get().uri("/api/v1/customer/{id}", expectedCustomer.getId())
+		webTestClient.get().uri(CUSTOMER_API + "/{id}", CUSTOMER_ID)
 				.exchange()
 				.expectStatus().isOk()
 				.expectBody(CustomerResponse.class)
-				.isEqualTo(expectedCustomer);
+				.isEqualTo(customer1);
 	}
 
 	@Test
-	@DisplayName("method get customer by id not found test and response message")
+	@DisplayName("method get customer by id not found test")
 	public void getCustomerByIdNotFoundTest() {
-		String nonExistentCustomerId = "123456799";
-		String expectedMessage = String.format("Customer with ID %s does not exist", nonExistentCustomerId);
+		when(service.getCustomerById(NON_EXISTENT_CUSTOMER_ID)).thenReturn(Mono.error(new NotFoundException(NOT_FOUND_MESSAGE)));
 
-		when(service.getCustomerById(nonExistentCustomerId)).thenReturn(Mono.error(new NotFoundException(expectedMessage)));
-
-		webTestClient.get().uri("/api/v1/customer/{id}", nonExistentCustomerId)
-				.exchange()
-				.expectStatus().isNotFound()
-				.expectBody()
-				.jsonPath("$.message").isEqualTo(expectedMessage);
-	}
-
-	@Test
-	@DisplayName("method get customer by id not found test and response status")
-	public void getCustomerByIdNotFoundStatusTest() {
-		String nonExistentCustomerId = "123456799";
-		String expectedMessage = String.format("Customer with ID %s does not exist", nonExistentCustomerId);
-
-		when(service.getCustomerById(nonExistentCustomerId)).thenReturn(Mono.error(new NotFoundException(expectedMessage)));
-
-		webTestClient.get().uri("/api/v1/customer/{id}", nonExistentCustomerId)
-				.exchange()
-				.expectStatus().isNotFound()
-				.expectBody()
-				.jsonPath("$.status").isEqualTo(404);
-	}
-
-	@Test
-	@DisplayName("method get customer by id not found test and response message")
-	public void getCustomerByIdNotFoundStatusMessageTest() {
-		String nonExistentCustomerId = "123456799";
-		String expectedMessage = String.format("Customer with ID %s does not exist", nonExistentCustomerId);
-
-		when(service.getCustomerById(nonExistentCustomerId)).thenReturn(Mono.error(new NotFoundException(expectedMessage)));
-
-		webTestClient.get().uri("/api/v1/customer/{id}", nonExistentCustomerId)
+		webTestClient.get().uri(CUSTOMER_API + "/{id}", NON_EXISTENT_CUSTOMER_ID)
 				.exchange()
 				.expectStatus().isNotFound()
 				.expectBody()
 				.jsonPath("$.status").isEqualTo(404)
-				.jsonPath("$.message").isEqualTo(expectedMessage);
+				.jsonPath("$.message").isEqualTo(NOT_FOUND_MESSAGE);
 	}
 
 	@Test
 	@DisplayName("method create customer test")
 	public void createCustomerTest() {
-		CustomerRequest customerRequest = new CustomerRequest();
-		customerRequest.setName("");
-		customerRequest.setLastName("");
-		customerRequest.setReason("EMPRESA DE INMUEBLES SAC");
-		customerRequest.setDocumentType(CustomerRequest.DocumentTypeEnum.RUC);
-		customerRequest.setDocumentNumber("20145879453");
-		customerRequest.setClientType(CustomerRequest.ClientTypeEnum.STAFF);
+		CustomerRequest customerRequest = createCustomerRequest("", "", "EMPRESA DE INMUEBLES SAC",
+				CustomerRequest.DocumentTypeEnum.RUC, "20145879453", CustomerRequest.ClientTypeEnum.STAFF);
+		CustomerResponse customerResponse = createCustomerResponse("123456788", "", "", "EMPRESA DE INMUEBLES SAC",
+				CustomerResponse.DocumentTypeEnum.RUC, "20145879453", CustomerResponse.ClientTypeEnum.STAFF);
 
-		CustomerResponse customerResponse = new CustomerResponse();
-		customerResponse.setId("123456788");
-		customerResponse.setName("");
-		customerResponse.setLastName("");
-		customerResponse.setReason("EMPRESA DE INMUEBLES SAC");
-		customerResponse.setDocumentType(CustomerResponse.DocumentTypeEnum.RUC);
-		customerResponse.setDocumentNumber("20145879453");
-		customerResponse.setClientType(CustomerResponse.ClientTypeEnum.STAFF);
+		when(service.createCustomer(any(CustomerRequest.class))).thenReturn(Mono.just(ResponseEntity.ok(customerResponse)));
 
-		when(service.createCustomer(customerRequest)).thenReturn(Mono.just(ResponseEntity.ok(customerResponse)));
-
-		webTestClient.post().uri("/api/v1/customer")
+		webTestClient.post().uri(CUSTOMER_API)
 				.bodyValue(customerRequest)
 				.exchange()
 				.expectStatus().isOk()
 				.expectBody(CustomerResponse.class)
 				.isEqualTo(customerResponse);
+	}
+
+	private CustomerResponse createCustomerResponse(String id, String name, String lastName, String reason,
+													CustomerResponse.DocumentTypeEnum documentType, String documentNumber,
+													CustomerResponse.ClientTypeEnum clientType) {
+		CustomerResponse customerResponse = new CustomerResponse();
+		customerResponse.setId(id);
+		customerResponse.setName(name);
+		customerResponse.setLastName(lastName);
+		customerResponse.setReason(reason);
+		customerResponse.setDocumentType(documentType);
+		customerResponse.setDocumentNumber(documentNumber);
+		customerResponse.setClientType(clientType);
+		return customerResponse;
+	}
+
+	private CustomerRequest createCustomerRequest(String name, String lastName, String reason,
+												  CustomerRequest.DocumentTypeEnum documentType, String documentNumber,
+												  CustomerRequest.ClientTypeEnum clientType) {
+		CustomerRequest customerRequest = new CustomerRequest();
+		customerRequest.setName(name);
+		customerRequest.setLastName(lastName);
+		customerRequest.setReason(reason);
+		customerRequest.setDocumentType(documentType);
+		customerRequest.setDocumentNumber(documentNumber);
+		customerRequest.setClientType(clientType);
+		return customerRequest;
 	}
 
 }
