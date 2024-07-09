@@ -40,8 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("service getCustomerById - ini");
 
         return this.customerRepository.findById(id)
-                .switchIfEmpty(Mono.error(new NotFoundException("CustomerEntity with ID %s does not exist", id)))
-                .doOnNext(customerEntity -> log.info("customerEntity by id service: {}", customerEntity))
+                .switchIfEmpty(Mono.error(new NotFoundException("Customer with ID %s does not exist", id)))
+                .doOnNext(customerEntity -> log.info("Customer by id service: {}", customerEntity))
                 .flatMap(customerEntity -> Mono.just(ResponseEntity.ok(AppUtils.entityToDto(customerEntity))))
                 .doOnTerminate(() -> log.info("service getCustomerById - end"));
     }
@@ -59,11 +59,11 @@ public class CustomerServiceImpl implements CustomerService {
                 .switchIfEmpty(Mono.defer(() -> {
                     return Mono.just(customerRequest)
                             .map(AppUtils::dtoToEntity)
-                            .doOnNext(customerBefore -> log.info("customer before create: {}", customerBefore))
+                            .doOnNext(customerBefore -> log.info("Customer before create: {}", customerBefore))
                             .flatMap(this.customerRepository::insert)
                             .map(AppUtils::entityToDto)
                             .map(dto -> ResponseEntity.status(HttpStatus.CREATED).body(dto))
-                            .doOnNext(customerAfter -> log.info("customer after create: {}", customerAfter));
+                            .doOnNext(customerAfter -> log.info("Customer after create: {}", customerAfter));
                 }))
                 .cast(ResponseEntity.class)
                 .map(responseEntity -> (ResponseEntity<CustomerResponse>) responseEntity)
