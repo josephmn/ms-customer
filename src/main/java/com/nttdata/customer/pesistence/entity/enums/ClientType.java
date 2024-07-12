@@ -1,6 +1,5 @@
 package com.nttdata.customer.pesistence.entity.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,16 +15,6 @@ public enum ClientType {
     private String value;
     private String description;
     private int code;
-
-    @JsonCreator
-    public static ClientType fromValue(String value) {
-        for (ClientType type : ClientType.values()) {
-            if (type.value.equalsIgnoreCase(value)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
 
     @JsonValue
     public String getValue() {

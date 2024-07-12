@@ -9,7 +9,6 @@ import com.nttdata.customer.pesistence.repository.CustomerRepository;
 import com.nttdata.customer.service.CustomerService;
 import com.nttdata.customer.utils.AppUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer() {
@@ -52,19 +54,15 @@ public class CustomerServiceImpl implements CustomerService {
 
         String documentNumber = customerRequest.getDocumentNumber();
         return this.customerRepository.findByDocumentNumber(documentNumber)
-                .flatMap(existingCustomer -> {
-                    return Mono.error(new CustomerAlreadyExistsException(
-                            "Customer exist with document number: %s", customerRequest.getDocumentNumber()));
-                })
-                .switchIfEmpty(Mono.defer(() -> {
-                    return Mono.just(customerRequest)
-                            .map(AppUtils::dtoToEntity)
-                            .doOnNext(customerBefore -> log.info("Customer before create: {}", customerBefore))
-                            .flatMap(this.customerRepository::insert)
-                            .map(AppUtils::entityToDto)
-                            .map(dto -> ResponseEntity.status(HttpStatus.CREATED).body(dto))
-                            .doOnNext(customerAfter -> log.info("Customer after create: {}", customerAfter));
-                }))
+                .flatMap(existingCustomer -> Mono.error(new CustomerAlreadyExistsException(
+                        "Customer exist with document number: %s", customerRequest.getDocumentNumber())))
+                .switchIfEmpty(Mono.defer(() -> Mono.just(customerRequest)
+                        .map(AppUtils::dtoToEntity)
+                        .doOnNext(customerBefore -> log.info("Customer before create: {}", customerBefore))
+                        .flatMap(this.customerRepository::insert)
+                        .map(AppUtils::entityToDto)
+                        .map(dto -> ResponseEntity.status(HttpStatus.CREATED).body(dto))
+                        .doOnNext(customerAfter -> log.info("Customer after create: {}", customerAfter))))
                 .cast(ResponseEntity.class)
                 .map(responseEntity -> (ResponseEntity<CustomerResponse>) responseEntity)
                 .doOnTerminate(() -> log.info("service createCustomer - end"));
@@ -75,9 +73,7 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("service updateCustomerById - ini");
 
         return this.customerRepository.findById(id)
-                .switchIfEmpty(Mono.defer(() -> {
-                    return Mono.error(new NotFoundException("Customer not exist with document number: %s", id));
-                }))
+                .switchIfEmpty(Mono.defer(() -> Mono.error(new NotFoundException("Customer not exist with document number: %s", id))))
                 .flatMap(existCustomer -> Mono.just(customerRequest)
                         .map(request -> {
                             var customerEntity = AppUtils.dtoToEntity(request);
