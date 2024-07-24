@@ -8,6 +8,7 @@ import com.nttdata.customer.exception.types.NotFoundException;
 import com.nttdata.customer.pesistence.repository.CustomerRepository;
 import com.nttdata.customer.service.CustomerService;
 import com.nttdata.customer.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,10 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
-
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
     @Override
     public Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer() {

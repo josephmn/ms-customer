@@ -5,7 +5,7 @@ import com.banking.openapi.model.CustomerRequest;
 import com.banking.openapi.model.CustomerResponse;
 import com.banking.openapi.model.ResponseDTO;
 import com.nttdata.customer.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,14 +14,11 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @RestController
+@RequiredArgsConstructor
 public class CustomerController implements CustomerApi {
 
-    @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @Override
     public Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer(ServerWebExchange exchange) {
