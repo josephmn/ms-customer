@@ -27,7 +27,7 @@ public class OpenApiConfig {
     @Value("${openapi.info.contact.email}")
     private String contactEmail;
 
-    @Value("${openapi.info.contact.email}")
+    @Value("${openapi.info.contact.url}")
     private String contactUrl;
 
     @Value("${openapi.info.servers.url}")
