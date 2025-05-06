@@ -3,7 +3,7 @@ info:
   title: Swagger Project - OpenAPI 3.0
   version: 1.0.0
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8081
 tags:
   - name: Customer
     description: Operations about customer

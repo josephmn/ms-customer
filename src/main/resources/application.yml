@@ -8,7 +8,7 @@
 #    active: default
 
 server:
-  port: 8080
+  port: 8081
 
 spring:
   cloud:
@@ -21,7 +21,6 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI}
-
 openapi:
   info:
     github:
@@ -32,7 +31,7 @@ openapi:
       email: josephcarlos.jcmn@gmail.com
       url: https://www.linkedin.com/in/joseph-magallanes-nolazco/
     servers:
-      url: http://localhost:8080
+      url: http://localhost:8081
       description: Local server Swagger
 
 springdoc:
