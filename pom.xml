@@ -28,6 +28,14 @@
     </scm>
     <properties>
         <java.version>17</java.version>
+        <server.resource>customer</server.resource>
+        <base.package>com.nttdata.customer</base.package>
+        <sonar.coverage.exclusions>
+            **/model/**,
+            **/config/**,
+            **/exception/**
+        </sonar.coverage.exclusions>
+        <openapi-generator.version>7.6.0</openapi-generator.version>
     </properties>
     <dependencies>
         <dependency>
@@ -199,7 +207,7 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.6.0</version>
+                <version>${openapi-generator.version}</version>
                 <executions>
                     <execution>
                         <id>generate</id>
@@ -209,11 +217,11 @@
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/swagger/OpenApi.yaml</inputSpec>
                             <generatorName>spring</generatorName>
-                            <output>${project.build.directory}/generated-sources</output>
+                            <!--<output>${project.build.directory}/generated-sources</output>-->
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
-                            <packageName>com.banking.openapi</packageName>
-                            <apiPackage>com.banking.openapi.api</apiPackage>
-                            <modelPackage>com.banking.openapi.model</modelPackage>
+                            <packageName>${base.package}.${server.resource}</packageName>
+                            <apiPackage>${base.package}.api</apiPackage>
+                            <modelPackage>${base.package}.model</modelPackage>
                             <configOptions>
                                 <reactive>true</reactive>
                                 <openApiNullable>true</openApiNullable>
@@ -221,8 +229,28 @@
                                 <useSwaggerUI>true</useSwaggerUI>
                                 <useTags>true</useTags>
                                 <interfaceOnly>true</interfaceOnly>
-                                <sourceFolder>generated-sources</sourceFolder>
+                                <!--<sourceFolder>generated-sources</sourceFolder>-->
                             </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--Agrega esto para que los sources generados se compilen -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/src/main/java</source>
+                            </sources>
                         </configuration>
                     </execution>
                 </executions>

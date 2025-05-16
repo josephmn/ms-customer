@@ -1,9 +1,9 @@
 package com.nttdata.customer;
 
-import com.banking.openapi.model.CustomerRequest;
-import com.banking.openapi.model.CustomerResponse;
 import com.nttdata.customer.controller.CustomerController;
 import com.nttdata.customer.exception.types.NotFoundException;
+import com.nttdata.customer.model.CustomerRequest;
+import com.nttdata.customer.model.CustomerResponse;
 import com.nttdata.customer.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

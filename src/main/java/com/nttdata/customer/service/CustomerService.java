@@ -1,8 +1,8 @@
 package com.nttdata.customer.service;
 
-import com.banking.openapi.model.CustomerRequest;
-import com.banking.openapi.model.CustomerResponse;
-import com.banking.openapi.model.ResponseDTO;
+import com.nttdata.customer.model.CustomerRequest;
+import com.nttdata.customer.model.CustomerResponse;
+import com.nttdata.customer.model.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

@@ -1,9 +1,9 @@
 package com.nttdata.customer.controller;
 
-import com.banking.openapi.api.CustomerApi;
-import com.banking.openapi.model.CustomerRequest;
-import com.banking.openapi.model.CustomerResponse;
-import com.banking.openapi.model.ResponseDTO;
+import com.nttdata.customer.api.CustomerApi;
+import com.nttdata.customer.model.CustomerRequest;
+import com.nttdata.customer.model.CustomerResponse;
+import com.nttdata.customer.model.ResponseDTO;
 import com.nttdata.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

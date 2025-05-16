@@ -1,10 +1,10 @@
 package com.nttdata.customer.service.Impl;
 
-import com.banking.openapi.model.CustomerRequest;
-import com.banking.openapi.model.CustomerResponse;
-import com.banking.openapi.model.ResponseDTO;
 import com.nttdata.customer.exception.types.CustomerAlreadyExistsException;
 import com.nttdata.customer.exception.types.NotFoundException;
+import com.nttdata.customer.model.CustomerRequest;
+import com.nttdata.customer.model.CustomerResponse;
+import com.nttdata.customer.model.ResponseDTO;
 import com.nttdata.customer.pesistence.repository.CustomerRepository;
 import com.nttdata.customer.service.CustomerService;
 import com.nttdata.customer.utils.AppUtils;

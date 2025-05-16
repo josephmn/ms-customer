@@ -1,8 +1,8 @@
 package com.nttdata.customer.utils;
 
-import com.banking.openapi.model.CustomerRequest;
-import com.banking.openapi.model.CustomerResponse;
 import com.nttdata.customer.exception.types.ValidationException;
+import com.nttdata.customer.model.CustomerRequest;
+import com.nttdata.customer.model.CustomerResponse;
 import com.nttdata.customer.pesistence.entity.CustomerEntity;
 import com.nttdata.customer.pesistence.entity.enums.ClientType;
 import com.nttdata.customer.pesistence.entity.enums.DocumentType;
