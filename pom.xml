@@ -215,7 +215,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/swagger/OpenApi.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/swagger/openapi.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <!--<output>${project.build.directory}/generated-sources</output>-->
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>

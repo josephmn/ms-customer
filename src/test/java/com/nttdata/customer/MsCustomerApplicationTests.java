@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
@@ -52,7 +51,7 @@ class MsCustomerApplicationTests {
 	@Test
 	@DisplayName("method get all customer test")
 	public void getCustomerTest() {
-		when(service.getCustomer()).thenReturn(Mono.just(ResponseEntity.ok(customerResponseFlux)));
+		when(service.getCustomer()).thenReturn(customerResponseFlux);
 
 		webTestClient.get().uri(CUSTOMER_API)
 				.exchange()
@@ -65,7 +64,7 @@ class MsCustomerApplicationTests {
 	@Test
 	@DisplayName("method get all customer empty test")
 	public void getCustomerEmptyTest() {
-		when(service.getCustomer()).thenReturn(Mono.just(ResponseEntity.ok(Flux.empty())));
+		when(service.getCustomer()).thenReturn(Flux.empty());
 
 		webTestClient.get().uri(CUSTOMER_API)
 				.exchange()
@@ -76,7 +75,7 @@ class MsCustomerApplicationTests {
 	@Test
 	@DisplayName("method get customer by id test")
 	public void getCustomerByIdTest() {
-		when(service.getCustomerById(CUSTOMER_ID)).thenReturn(Mono.just(ResponseEntity.ok(customer1)));
+		when(service.getCustomerById(CUSTOMER_ID)).thenReturn(Mono.just(customer1));
 
 		webTestClient.get().uri(CUSTOMER_API + "/{id}", CUSTOMER_ID)
 				.exchange()
@@ -106,7 +105,7 @@ class MsCustomerApplicationTests {
 		CustomerResponse customerResponse = createCustomerResponse("123456788", "", "", "EMPRESA DE INMUEBLES SAC",
 				CustomerResponse.DocumentTypeEnum.RUC, "20145879453", CustomerResponse.ClientTypeEnum.STAFF);
 
-		when(service.createCustomer(any(CustomerRequest.class))).thenReturn(Mono.just(ResponseEntity.ok(customerResponse)));
+		when(service.createCustomer(any(CustomerRequest.class))).thenReturn(Mono.just(customerResponse));
 
 		webTestClient.post().uri(CUSTOMER_API)
 				.bodyValue(customerRequest)

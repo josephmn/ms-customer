@@ -8,9 +8,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CustomerService {
-    Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer();
-    Mono<ResponseEntity<CustomerResponse>> getCustomerById(String id);
-    Mono<ResponseEntity<CustomerResponse>> createCustomer(CustomerRequest customerDTO);
-    Mono<ResponseEntity<CustomerResponse>> updateCustomerById(String id, CustomerRequest customerDTO);
-    Mono<ResponseEntity<ResponseDTO>> deleteCustomerById(String id);
+    Flux<CustomerResponse> getCustomer();
+    Mono<CustomerResponse> getCustomerById(String id);
+    Mono<CustomerResponse> createCustomer(CustomerRequest customerDTO);
+    Mono<CustomerResponse> updateCustomerById(String id, CustomerRequest customerDTO);
+    Mono<ResponseDTO> deleteCustomerById(String id);
 }

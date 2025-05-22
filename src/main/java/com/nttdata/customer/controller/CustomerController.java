@@ -22,31 +22,40 @@ public class CustomerController implements CustomerApi {
 
     @Override
     public Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer(ServerWebExchange exchange) {
-        return this.customerService.getCustomer();
+        return Mono.just(ResponseEntity.ok(this.customerService.getCustomer()))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> getCustomerById(
             @PathVariable("id") String id, ServerWebExchange exchange) {
-        return this.customerService.getCustomerById(id);
+        return this.customerService.getCustomerById(id)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> createCustomer(
             @RequestBody Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
-        return customerRequest.flatMap(this.customerService::createCustomer);
+        return customerRequest.flatMap(this.customerService::createCustomer)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> updateCustomerById(
             @PathVariable("id") String id,
             @RequestBody Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
-        return customerRequest.flatMap(dto -> this.customerService.updateCustomerById(id, dto));
+        return customerRequest.flatMap(dto -> this.customerService.updateCustomerById(id, dto))
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<ResponseDTO>> deleteCustomerById(
             @PathVariable("id") String id, ServerWebExchange exchange) {
-        return this.customerService.deleteCustomerById(id);
+        return this.customerService.deleteCustomerById(id)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }
