@@ -6,6 +6,12 @@ import com.nttdata.customer.model.ResponseDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * CustomerService.
+ *
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 public interface CustomerService {
     Flux<CustomerResponse> getCustomer();
     Mono<CustomerResponse> getCustomerById(String id);

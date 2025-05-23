@@ -10,6 +10,12 @@ import com.nttdata.customer.exception.types.CustomerAlreadyExistsException;
 import com.nttdata.customer.exception.types.NotFoundException;
 import com.nttdata.customer.exception.types.ValidationException;
 
+/**
+ * GlobalExceptionHandler class handles exceptions thrown by the application.
+ * It provides custom error responses for different types of exceptions.
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

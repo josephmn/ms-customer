@@ -10,6 +10,12 @@ import com.nttdata.customer.pesistence.entity.enums.ClientType;
 import com.nttdata.customer.pesistence.entity.enums.DocumentType;
 import com.nttdata.customer.utils.constans.ConstansConfig;
 
+/**
+ * AppUtils.
+ *
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 public class AppUtils {
 
     private AppUtils() {

@@ -17,6 +17,8 @@ import reactor.core.publisher.Mono;
 /**
  * CustomerController is a REST controller that handles customer-related API requests.
  * It implements the CustomerApi interface and uses the CustomerService to perform operations.
+ * @author Joseph Magallanes
+ * @since 2025-05-23
  */
 @RestController
 @RequiredArgsConstructor

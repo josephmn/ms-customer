@@ -9,6 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Entity class representing a customer in the database.
+ * This class is mapped to the "customer" collection in MongoDB.
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 @Document(collection = "customer")
 @Getter
 @Setter

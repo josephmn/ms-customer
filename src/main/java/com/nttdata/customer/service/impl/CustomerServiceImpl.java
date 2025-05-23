@@ -1,4 +1,4 @@
-package com.nttdata.customer.service.Impl;
+package com.nttdata.customer.service.impl;
 
 import org.springframework.stereotype.Service;
 import com.nttdata.customer.exception.types.CustomerAlreadyExistsException;
@@ -14,6 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * CustomerServiceImpl.
+ *
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

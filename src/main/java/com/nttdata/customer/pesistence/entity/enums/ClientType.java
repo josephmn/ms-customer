@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Enum representing different types of clients.
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

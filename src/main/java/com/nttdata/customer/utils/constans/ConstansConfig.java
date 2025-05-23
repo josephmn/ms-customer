@@ -1,5 +1,11 @@
 package com.nttdata.customer.utils.constans;
 
+/**
+ * ConstansConfig.
+ *
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 public class ConstansConfig {
 
     // Id for reason

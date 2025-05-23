@@ -11,6 +11,12 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
 
+/**
+ * OpenApiConfig.
+ *
+ * @author Joseph Magallanes
+ * @since 2025-05-23
+ */
 @Configuration
 public class OpenApiConfig {
 
