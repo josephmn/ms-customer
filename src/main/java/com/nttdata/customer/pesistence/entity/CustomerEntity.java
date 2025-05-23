@@ -1,13 +1,10 @@
 package com.nttdata.customer.pesistence.entity;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.nttdata.customer.pesistence.entity.enums.ClientType;
 import com.nttdata.customer.pesistence.entity.enums.DocumentType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * Entity class representing a customer in the database.
@@ -20,6 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class CustomerEntity {
 
     @Id

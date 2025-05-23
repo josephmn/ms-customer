@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @WebFluxTest(CustomerController.class)
-class MsCustomerApplicationTests {
+class applicationTests {
 
 	@Autowired
 	private WebTestClient webTestClient;

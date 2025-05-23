@@ -12,13 +12,13 @@ import io.github.cdimascio.dotenv.Dotenv;
  * @since 2025-05-23
  */
 @SpringBootApplication
-public class MsCustomerApplication {
+public class Application {
 
     public static void main(String[] args) {
         final Dotenv dotenv = Dotenv.configure().load();
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
 
-        SpringApplication.run(MsCustomerApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }
