@@ -16,6 +16,11 @@ public enum ClientType {
     private String description;
     private int code;
 
+    /**
+     * Get the enum value as a string.
+     *
+     * @return the string representation of the enum value
+     */
     @JsonValue
     public String getValue() {
         return value;

@@ -24,7 +24,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CustomerResponse'
-
     post:
       tags:
         - Customer
@@ -45,7 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
-
   /api/v1/customer/{id}:
     get:
       tags:
@@ -67,7 +65,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
-
     put:
       tags:
         - Customer

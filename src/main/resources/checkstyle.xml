@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <module name="LineLength">
+        <property name="fileExtensions" value="java"/>
+        <property name="max" value="120"/>
+        <property name="ignorePattern"
+                  value="^package.*|^import.*|href\s*=\s*&quot;[^&quot;]*&quot;|http://|https://|ftp://"/>
+    </module>
+    <module name="FileLength">
+        <property name="max" value="1000"/>
+    </module>
+    <module name="TreeWalker">
+        <!-- Javadoc Comments -->
+        <module name="AtclauseOrder"/>
+        <module name="InvalidJavadocPosition"/>
+        <module name="JavadocBlockTagLocation">
+            <!-- default tags -->
+            <property name="tags" value="author, deprecated, exception, hidden, param, provides"/>
+            <property name="tags" value="return, see, serial, serialData, serialField, since, throws"/>
+            <property name="tags" value="uses, version"/>
+            <!-- additional tags used in the project -->
+            <property name="tags" value="noinspection"/>
+        </module>
+        <module name="JavadocContentLocation"/>
+        <!--<module name="JavadocMethod">
+            <property name="validateThrows" value="true"/>
+        </module>-->
+        <module name="JavadocParagraph"/>
+        <module name="JavadocStyle">
+            <property name="scope" value="public"/>
+        </module>
+        <module name="JavadocTagContinuationIndentation"/>
+        <module name="JavadocType">
+            <!-- avoid errors on tag '@noinspection' -->
+            <property name="allowUnknownTags" value="true"/>
+        </module>
+        <!-- agregar comentarios a las variables -->
+        <!--<module name="JavadocVariable"/>-->
+
+        <module name="MissingJavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+            <property name="allowedAnnotations" value="Override,Inject,Provides"/>
+            <!-- Relaxed check on common names -->
+            <property name="ignoreMethodNamesRegex" value="^(is|find|get|update|delete|set|remove|add|new|create|main).*$"/>
+        </module>
+        <module name="MissingJavadocPackage"/>
+        <!-- agregar comentarios a las clases -->
+        <!--<module name="MissingJavadocType">
+            <property name="scope" value="private"/>
+        </module>-->
+
+        <module name="MethodName"/>
+        <module name="MethodLength">
+            <property name="max" value="50"/>
+        </module>
+        <module name="TypeName">
+            <!-- El regex por defecto exige que las clases empiecen con mayúscula y usen PascalCase -->
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+        </module>
+        <module name="ConstantName">
+            <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+        </module>
+        <module name="LocalVariableName"/>
+        <module name="ParameterName">
+            <property name="format" value="^(id)|([a-z][a-z0-9][a-zA-Z0-9]+)$"/>
+            <property name="ignoreOverridden" value="true"/>
+        </module>
+        <module name="AvoidStarImport"/>
+        <module name="UnusedImports"/>
+        <module name="RedundantImport"/>
+
+        <module name="ImportOrder">
+            <property name="groups" value="java, javax, org, com"/>
+        </module>
+
+        <module name="WhitespaceAfter"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="WhitespaceAround"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="Indentation"/>
+        <module name="FinalLocalVariable"/>
+        <module name="NeedBraces"/>
+        <module name="EmptyBlock"/>
+        <module name="EqualsAvoidNull"/>
+        <module name="RedundantModifier"/>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="MagicNumber"/>
+        <module name="IllegalThrows"/>
+        <module name="LeftCurly">
+            <property name="option" value="eol"/>
+        </module>
+        <module name="RightCurly">
+            <property name="option" value="alone"/>
+        </module>
+    </module>
+</module>

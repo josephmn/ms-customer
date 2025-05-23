@@ -1,19 +1,23 @@
 package com.nttdata.customer.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 import com.nttdata.customer.api.CustomerApi;
 import com.nttdata.customer.model.CustomerRequest;
 import com.nttdata.customer.model.CustomerResponse;
 import com.nttdata.customer.model.ResponseDTO;
 import com.nttdata.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * CustomerController is a REST controller that handles customer-related API requests.
+ * It implements the CustomerApi interface and uses the CustomerService to perform operations.
+ */
 @RestController
 @RequiredArgsConstructor
 public class CustomerController implements CustomerApi {

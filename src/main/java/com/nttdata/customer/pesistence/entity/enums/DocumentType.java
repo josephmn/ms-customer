@@ -19,6 +19,11 @@ public enum DocumentType {
     private String description;
     private int code;
 
+    /**
+     * Get the enum value as a string.
+     *
+     * @return the string representation of the enum value
+     */
     @JsonCreator
     public static DocumentType fromValue(String value) {
         for (DocumentType type : DocumentType.values()) {
@@ -29,6 +34,11 @@ public enum DocumentType {
         throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
 
+    /**
+     * Get the enum value as a string.
+     *
+     * @return the string representation of the enum value
+     */
     @JsonValue
     public String getValue() {
         return value;

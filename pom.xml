@@ -100,6 +100,26 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>${project.basedir}/src/main/resources/checkstyle.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
@@ -215,10 +235,10 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/swagger/openapi.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <!--<output>${project.build.directory}/generated-sources</output>-->
-                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <!--<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>-->
                             <packageName>${base.package}.${server.resource}</packageName>
                             <apiPackage>${base.package}.api</apiPackage>
                             <modelPackage>${base.package}.model</modelPackage>

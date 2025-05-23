@@ -1,16 +1,15 @@
 package com.nttdata.customer.utils;
 
+import java.util.Collections;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.util.Collections;
 
 @Configuration
 public class OpenApiConfig {
@@ -36,12 +35,18 @@ public class OpenApiConfig {
     @Value("${openapi.info.servers.description}")
     private String serversDescription;
 
+    /**
+     * Configures the OpenAPI documentation for the application.
+     *
+     * @return OpenAPI object with the configuration.
+     */
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("Project Banking Customer - OpenAPI 3.0")
-                        .description("This is the version of an API created with MongoDB, reactive programming, and functional programming for customer maintenance.\n"
+                        .description("This is the version of an API created with MongoDB, reactive programming, " +
+                                "and functional programming for customer maintenance.\n"
                                 + "\nSome useful links:\n"
                                 + "\nThe repository in GitHub: " + githubUrl)
                         .termsOfService(terms)

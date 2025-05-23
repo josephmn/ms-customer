@@ -1,5 +1,6 @@
 package com.nttdata.customer.service.Impl;
 
+import org.springframework.stereotype.Service;
 import com.nttdata.customer.exception.types.CustomerAlreadyExistsException;
 import com.nttdata.customer.exception.types.NotFoundException;
 import com.nttdata.customer.model.CustomerRequest;
@@ -10,7 +11,6 @@ import com.nttdata.customer.service.CustomerService;
 import com.nttdata.customer.utils.AppUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -46,12 +46,12 @@ public class CustomerServiceImpl implements CustomerService {
     public Mono<CustomerResponse> createCustomer(CustomerRequest customerRequest) {
         log.info("service createCustomer - ini");
 
-        String documentNumber = customerRequest.getDocumentNumber();
+        final String documentNumber = customerRequest.getDocumentNumber();
         return this.customerRepository.findByDocumentNumber(documentNumber)
                 .flatMap(existingCustomer -> Mono.error(new CustomerAlreadyExistsException(
                         "Customer exists with document number: %s", documentNumber)))
                 .switchIfEmpty(Mono.defer(() -> {
-                    var customerEntity = AppUtils.dtoToEntity(customerRequest);
+                    final var customerEntity = AppUtils.dtoToEntity(customerRequest);
                     log.info("Customer before create: {}", customerEntity);
                     return this.customerRepository.insert(customerEntity)
                             .map(AppUtils::entityToDto)
@@ -66,10 +66,12 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("service updateCustomerById - ini");
 
         return this.customerRepository.findById(id)
-                .switchIfEmpty(Mono.defer(() -> Mono.error(new NotFoundException("Customer not exist with document number: %s", id))))
+                .switchIfEmpty(Mono.defer(() -> Mono.error(
+                        new NotFoundException("Customer not exist with document number: %s", id)
+                )))
                 .flatMap(existCustomer -> Mono.just(customerRequest)
                         .map(request -> {
-                            var customerEntity = AppUtils.dtoToEntity(request);
+                            final var customerEntity = AppUtils.dtoToEntity(request);
                             customerEntity.setId(id);
                             return customerEntity;
                         })
@@ -87,7 +89,8 @@ public class CustomerServiceImpl implements CustomerService {
                     if (exist) {
                         return this.customerRepository.deleteById(id)
                                 .then(Mono.just(new ResponseDTO().message("Customer deleted successfully")));
-                    } else {
+                    }
+                    else {
                         return Mono.error(new CustomerAlreadyExistsException(
                                 "Customer not exist with id: %s", id));
                     }
