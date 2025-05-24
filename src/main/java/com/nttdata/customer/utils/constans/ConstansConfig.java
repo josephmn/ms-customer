@@ -19,4 +19,10 @@ public class ConstansConfig {
 
     // Id for clientType
     public static final int ID_CLIENT_TYPE = 6;
+
+    // Id for customer
+    public static final int TOKEN_SUBSTRING = 7;
+
+    // Time duration for token
+    public static final int TIME_DURATION = 1000 * 60 * 60 * 10;
 }

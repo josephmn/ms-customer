@@ -21,6 +21,8 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI}
+jwt:
+  secret: ${SECURE_JWT}
 openapi:
   info:
     github:

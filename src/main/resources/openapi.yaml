@@ -24,6 +24,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CustomerResponse'
+      security:
+        - bearerAuth: []
     post:
       tags:
         - Customer
@@ -44,6 +46,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
+      security:
+        - bearerAuth: []
   /api/v1/customer/{id}:
     get:
       tags:
@@ -65,6 +69,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
+      security:
+        - bearerAuth: []
     put:
       tags:
         - Customer
@@ -92,6 +98,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
+      security:
+        - bearerAuth: []
     delete:
       tags:
         - Customer
@@ -114,6 +122,35 @@ paths:
                 $ref: '#/components/schemas/ResponseDTO'
         404:
           description: CustomerEntity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login user
+      description: Authenticates the user and returns a JWT token.
+      operationId: loginUser
+      requestBody:
+        required: true
+        description: User credentials
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        200:
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponse'
+        401:
+          description: Unauthorized
           content:
             application/json:
               schema:
@@ -192,3 +229,29 @@ components:
         message:
           type: string
           example: 'Message response'
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: "john.doe"
+        password:
+          type: string
+          example: "mypassword123"
+    JwtResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        tokenType:
+          type: string
+          example: "Bearer"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
