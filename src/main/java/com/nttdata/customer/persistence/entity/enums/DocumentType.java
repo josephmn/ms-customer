@@ -1,4 +1,4 @@
-package com.nttdata.customer.pesistence.entity.enums;
+package com.nttdata.customer.persistence.entity.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

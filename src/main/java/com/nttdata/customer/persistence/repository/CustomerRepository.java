@@ -1,8 +1,8 @@
-package com.nttdata.customer.pesistence.repository;
+package com.nttdata.customer.persistence.repository;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
-import com.nttdata.customer.pesistence.entity.CustomerEntity;
+import com.nttdata.customer.persistence.entity.CustomerEntity;
 import reactor.core.publisher.Mono;
 
 /**

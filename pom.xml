@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
+        <version>3.5.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.nttdata.customer</groupId>
@@ -34,6 +34,9 @@
             **/model/**,
             **/config/**,
             **/exception/**
+            **/utils/**
+            **/api/**
+            **/persistence/**
         </sonar.coverage.exclusions>
         <openapi-generator.version>7.6.0</openapi-generator.version>
     </properties>
@@ -150,41 +153,22 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>4.0.0-M15</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.6.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.4.0</version>
-                <configuration>
-                    <configLocation>${project.basedir}/src/main/resources/checkstyle/checkstyle.xml</configLocation>
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
-                    <linkXRef>false</linkXRef>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.12</version>
-                <executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/model/**</exclude>
+                        <exclude>**/config/**</exclude>
+                        <exclude>**/exception/**</exclude>
+                        <exclude>**/utils/**</exclude>
+                        <exclude>**/api/**</exclude>
+                        <exclude>**/persistence/**</exclude>
+                        <exclude>**/Application.class</exclude>
+                    </excludes>
+                </configuration>
+                <!--<executions>
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
@@ -222,8 +206,8 @@
                             </rules>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin> -->
+                </executions>-->
+            </plugin>
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>

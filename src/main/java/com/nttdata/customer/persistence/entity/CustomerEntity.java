@@ -1,10 +1,14 @@
-package com.nttdata.customer.pesistence.entity;
+package com.nttdata.customer.persistence.entity;
 
-import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.nttdata.customer.pesistence.entity.enums.ClientType;
-import com.nttdata.customer.pesistence.entity.enums.DocumentType;
+import com.nttdata.customer.persistence.entity.enums.ClientType;
+import com.nttdata.customer.persistence.entity.enums.DocumentType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Entity class representing a customer in the database.

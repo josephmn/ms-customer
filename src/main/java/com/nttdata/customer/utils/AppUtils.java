@@ -5,9 +5,9 @@ import java.util.Map;
 import com.nttdata.customer.exception.types.ValidationException;
 import com.nttdata.customer.model.CustomerRequest;
 import com.nttdata.customer.model.CustomerResponse;
-import com.nttdata.customer.pesistence.entity.CustomerEntity;
-import com.nttdata.customer.pesistence.entity.enums.ClientType;
-import com.nttdata.customer.pesistence.entity.enums.DocumentType;
+import com.nttdata.customer.persistence.entity.CustomerEntity;
+import com.nttdata.customer.persistence.entity.enums.ClientType;
+import com.nttdata.customer.persistence.entity.enums.DocumentType;
 import com.nttdata.customer.utils.constans.ConstansConfig;
 
 /**

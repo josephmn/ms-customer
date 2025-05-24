@@ -6,7 +6,7 @@ import com.nttdata.customer.exception.types.NotFoundException;
 import com.nttdata.customer.model.CustomerRequest;
 import com.nttdata.customer.model.CustomerResponse;
 import com.nttdata.customer.model.ResponseDTO;
-import com.nttdata.customer.pesistence.repository.CustomerRepository;
+import com.nttdata.customer.persistence.repository.CustomerRepository;
 import com.nttdata.customer.service.CustomerService;
 import com.nttdata.customer.utils.AppUtils;
 import lombok.RequiredArgsConstructor;
