@@ -17,6 +17,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -42,9 +44,11 @@ class CustomerControllerTest {
     @BeforeEach
     public void setup() {
         customer1 = createCustomerResponse("123456788", "Juan Pepe", "Vasquez Perez", "",
-            CustomerResponse.DocumentTypeEnum.DNI, "12345678", CustomerResponse.ClientTypeEnum.STAFF);
+            CustomerResponse.DocumentTypeEnum.DNI, "12345678", CustomerResponse.ClientTypeEnum.STAFF,
+            "Av. Siempre Viva 123", "usuario@ejemplo.com", List.of("987654321", "123456789"));
         customer2 = createCustomerResponse("123456789", "", "", "EMPRESA DE TRANSPORTE SA",
-            CustomerResponse.DocumentTypeEnum.RUC, "203145698745", CustomerResponse.ClientTypeEnum.BUSINESS);
+            CustomerResponse.DocumentTypeEnum.RUC, "203145698745", CustomerResponse.ClientTypeEnum.BUSINESS,
+            "Av. Principal 456", "empresa@ejemplo.com", List.of("987654321", "123456789"));
         customerResponseFlux = Flux.just(customer1, customer2);
     }
 
@@ -101,9 +105,11 @@ class CustomerControllerTest {
     @DisplayName("method create customer test")
     public void createCustomerTest() {
         CustomerRequest customerRequest = createCustomerRequest("", "", "EMPRESA DE INMUEBLES SAC",
-            CustomerRequest.DocumentTypeEnum.RUC, "20145879453", CustomerRequest.ClientTypeEnum.STAFF);
+            CustomerRequest.DocumentTypeEnum.RUC, "20145879453", CustomerRequest.ClientTypeEnum.STAFF,
+            "Av. Principal 456", "empresa@ejemplo.com", List.of("987654321", "123456789"));
         CustomerResponse customerResponse = createCustomerResponse("123456788", "", "", "EMPRESA DE INMUEBLES SAC",
-            CustomerResponse.DocumentTypeEnum.RUC, "20145879453", CustomerResponse.ClientTypeEnum.STAFF);
+            CustomerResponse.DocumentTypeEnum.RUC, "20145879453", CustomerResponse.ClientTypeEnum.STAFF,
+            "Av. Principal 456", "empresa@ejemplo.com", List.of("987654321", "123456789"));
 
         when(service.createCustomer(any(CustomerRequest.class))).thenReturn(Mono.just(customerResponse));
 
@@ -117,7 +123,8 @@ class CustomerControllerTest {
 
     private CustomerResponse createCustomerResponse(String id, String name, String lastName, String reason,
                                                     CustomerResponse.DocumentTypeEnum documentType, String documentNumber,
-                                                    CustomerResponse.ClientTypeEnum clientType) {
+                                                    CustomerResponse.ClientTypeEnum clientType, String address,
+                                                    String email, List<String> phones) {
         CustomerResponse customerResponse = new CustomerResponse();
         customerResponse.setId(id);
         customerResponse.setName(name);
@@ -126,12 +133,16 @@ class CustomerControllerTest {
         customerResponse.setDocumentType(documentType);
         customerResponse.setDocumentNumber(documentNumber);
         customerResponse.setClientType(clientType);
+        customerResponse.setAddress(address);
+        customerResponse.setEmail(email);
+        customerResponse.setPhones(phones);
         return customerResponse;
     }
 
     private CustomerRequest createCustomerRequest(String name, String lastName, String reason,
                                                   CustomerRequest.DocumentTypeEnum documentType, String documentNumber,
-                                                  CustomerRequest.ClientTypeEnum clientType) {
+                                                  CustomerRequest.ClientTypeEnum clientType, String address,
+                                                  String email, List<String> phones) {
         CustomerRequest customerRequest = new CustomerRequest();
         customerRequest.setName(name);
         customerRequest.setLastName(lastName);
@@ -139,6 +150,9 @@ class CustomerControllerTest {
         customerRequest.setDocumentType(documentType);
         customerRequest.setDocumentNumber(documentNumber);
         customerRequest.setClientType(clientType);
+        customerRequest.setAddress(address);
+        customerRequest.setEmail(email);
+        customerRequest.setPhones(phones);
         return customerRequest;
     }
 }

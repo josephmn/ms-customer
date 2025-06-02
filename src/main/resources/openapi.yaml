@@ -8,11 +8,11 @@ tags:
   - name: Customer
     description: Operations about customer
 paths:
-  /api/v1/customer:
+  /customer:
     get:
       tags:
         - Customer
-      summary: Get customer
+      summary: Get customer all
       description: CustomerEntity list from mongoDB.
       operationId: getCustomer
       responses:
@@ -24,7 +24,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CustomerResponse'
-
     post:
       tags:
         - Customer
@@ -45,18 +44,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
-
-  /api/v1/customer/{id}:
+  /customer/{clientId}:
     get:
       tags:
         - Customer
-      summary: Get customer by id
+      summary: Get customer by clientId
       description: Get customer.
       operationId: getCustomerById
       parameters:
-        - name: id
+        - name: clientId
           in: path
-          description: find by id
+          description: find by clientId
           required: true
           schema:
             type: string
@@ -67,15 +65,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
-
     put:
       tags:
         - Customer
-      summary: Update customer by id
+      summary: Update customer by clientId
       description: Update customer.
       operationId: updateCustomerById
       parameters:
-        - name: id
+        - name: clientId
           in: path
           description: id that need to be updated
           required: true
@@ -95,15 +92,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
-
     delete:
       tags:
         - Customer
-      summary: Delete customer by id
+      summary: Delete customer by clientId
       description: Delete an existent customer in the database mongoDB.
       operationId: deleteCustomerById
       parameters:
-        - name: id
+        - name: clientId
           in: path
           description: The id that needs to be deleted
           required: true
@@ -122,7 +118,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseDTO'
-
 components:
   schemas:
     CustomerRequest:
@@ -161,6 +156,24 @@ components:
             - STAFF
             - BUSINESS
           example: STAFF
+        address:
+          maxLength: 20
+          type: string
+          example: "Av. Siempre viva #345"
+        email:
+          type: string
+          format: email
+          pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+          example: "usuario@ejemplo.com"
+        phones:
+          type: array
+          items:
+            type: string
+            pattern: '^\+?[1-9]\d{1,14}$'
+          example:
+            - "+51987654321"
+            - "+54976453245"
+            - "+189764532"
     CustomerResponse:
       type: object
       properties:
@@ -191,6 +204,24 @@ components:
             - STAFF
             - BUSINESS
           example: STAFF
+        address:
+          maxLength: 20
+          type: string
+          example: "Av. Siempre viva #34"
+        email:
+          type: string
+          format: email
+          pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+          example: "usuario@ejemplo.com"
+        phones:
+          type: array
+          items:
+            type: string
+            pattern: '^\+?[1-9]\d{1,14}$'
+          example:
+            - "+51987654321"
+            - "+54976453245"
+            - "+189764532"
     ResponseDTO:
       type: object
       properties:

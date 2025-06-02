@@ -40,3 +40,8 @@ springdoc:
   swagger-ui:
     #    enabled: true
     path: index.html
+
+#logging:
+#  level:
+#    root: DEBUG
+#    com.nttdata.customer: DEBUG

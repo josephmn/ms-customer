@@ -38,11 +38,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<CustomerResponse> getCustomerById(String id) {
+    public Mono<CustomerResponse> getCustomerById(String clientId) {
         log.info("service getCustomerById - ini");
 
-        return this.customerRepository.findById(id)
-                .switchIfEmpty(Mono.error(new NotFoundException("Customer with ID %s does not exist", id)))
+        return this.customerRepository.findById(clientId)
+                .switchIfEmpty(Mono.error(new NotFoundException("Customer with ID %s does not exist", clientId)))
                 .doOnNext(customerEntity -> log.info("Customer by id service: {}", customerEntity))
                 .flatMap(customerEntity -> Mono.just(AppUtils.entityToDto(customerEntity)))
                 .doOnTerminate(() -> log.info("service getCustomerById - end"));
@@ -68,17 +68,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<CustomerResponse> updateCustomerById(String id, CustomerRequest customerRequest) {
+    public Mono<CustomerResponse> updateCustomerById(String clientId, CustomerRequest customerRequest) {
         log.info("service updateCustomerById - ini");
 
-        return this.customerRepository.findById(id)
+        return this.customerRepository.findById(clientId)
                 .switchIfEmpty(Mono.defer(() -> Mono.error(
-                        new NotFoundException("Customer not exist with document number: %s", id)
+                        new NotFoundException("Customer not exist with document number: %s", clientId)
                 )))
                 .flatMap(existCustomer -> Mono.just(customerRequest)
                         .map(request -> {
                             final var customerEntity = AppUtils.dtoToEntity(request);
-                            customerEntity.setId(id);
+                            customerEntity.setId(clientId);
                             return customerEntity;
                         })
                         .flatMap(this.customerRepository::save)
@@ -87,18 +87,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<ResponseDTO> deleteCustomerById(String id) {
+    public Mono<ResponseDTO> deleteCustomerById(String clientId) {
         log.info("service deleteCustomerById - ini");
 
-        return this.customerRepository.existsById(id)
+        return this.customerRepository.existsById(clientId)
                 .flatMap(exist -> {
                     if (exist) {
-                        return this.customerRepository.deleteById(id)
+                        return this.customerRepository.deleteById(clientId)
                                 .then(Mono.just(new ResponseDTO().message("Customer deleted successfully")));
                     }
                     else {
                         return Mono.error(new CustomerAlreadyExistsException(
-                                "Customer not exist with id: %s", id));
+                                "Customer not exist with id: %s", clientId));
                     }
                 });
     }

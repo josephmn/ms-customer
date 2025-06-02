@@ -215,7 +215,7 @@
                 <version>${openapi-generator.version}</version>
                 <executions>
                     <execution>
-                        <id>generate</id>
+                        <id>generate-openapi-server</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -234,7 +234,9 @@
                                 <useSwaggerUI>true</useSwaggerUI>
                                 <useTags>true</useTags>
                                 <interfaceOnly>true</interfaceOnly>
+                                <!--<apiBasePath>/api/v1</apiBasePath>-->
                                 <!--<sourceFolder>generated-sources</sourceFolder>-->
+                                <!--<templateDirectory>${project.basedir}/src/main/resources/templates</templateDirectory>-->
                             </configOptions>
                         </configuration>
                     </execution>

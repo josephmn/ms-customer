@@ -38,6 +38,9 @@ public class AppUtils {
                 customer.getDocumentType().getValue()));
         customerResponse.setDocumentNumber(customer.getDocumentNumber());
         customerResponse.setClientType(CustomerResponse.ClientTypeEnum.fromValue(customer.getClientType().getValue()));
+        customerResponse.setAddress(customer.getAddress());
+        customerResponse.setEmail(customer.getEmail());
+        customerResponse.setPhones(customer.getPhones());
         return customerResponse;
     }
 
@@ -58,6 +61,9 @@ public class AppUtils {
         validateDocumentType(customerRequest, errors, customerEntity);
         validateDocumentNumber(customerRequest, errors, customerEntity);
         validateClientType(customerRequest, errors, customerEntity);
+        customerEntity.setAddress(customerRequest.getAddress());
+        customerEntity.setEmail(customerRequest.getEmail());
+        customerEntity.setPhones(customerRequest.getPhones());
 
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);

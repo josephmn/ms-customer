@@ -3,6 +3,7 @@ package com.nttdata.customer.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import com.nttdata.customer.api.CustomerApi;
@@ -22,6 +23,7 @@ import reactor.core.publisher.Mono;
  */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class CustomerController implements CustomerApi {
 
     private final CustomerService customerService;
@@ -34,8 +36,8 @@ public class CustomerController implements CustomerApi {
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> getCustomerById(
-            @PathVariable("id") String id, ServerWebExchange exchange) {
-        return this.customerService.getCustomerById(id)
+            @PathVariable("clientId") String clientId, ServerWebExchange exchange) {
+        return this.customerService.getCustomerById(clientId)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
@@ -50,17 +52,17 @@ public class CustomerController implements CustomerApi {
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> updateCustomerById(
-            @PathVariable("id") String id,
+            @PathVariable("clientId") String clientId,
             @RequestBody Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
-        return customerRequest.flatMap(dto -> this.customerService.updateCustomerById(id, dto))
+        return customerRequest.flatMap(dto -> this.customerService.updateCustomerById(clientId, dto))
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<ResponseDTO>> deleteCustomerById(
-            @PathVariable("id") String id, ServerWebExchange exchange) {
-        return this.customerService.deleteCustomerById(id)
+            @PathVariable("clientId") String clientId, ServerWebExchange exchange) {
+        return this.customerService.deleteCustomerById(clientId)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
