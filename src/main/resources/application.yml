@@ -1,16 +1,9 @@
-
-#spring:
-#  application:
-#    name: ms-product
-#  config:
-#    import: configserver:http://localhost:8086
-#  profiles:
-#    active: default
-
 server:
   port: 8081
 
 spring:
+  banner:
+    location: classpath:banner/banner-prod.txt
   cloud:
     config:
       enabled: false
@@ -21,12 +14,15 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI}
+  output:
+    ansi:
+      enabled: ALWAYS
 jwt:
   secret: ${SECURE_JWT}
 openapi:
   info:
     github:
-      url: https://github.com/lujose421/Customer
+      url: https://github.com/josephmn/ms-customer.git
     terms: http://swagger.io/terms/
     contact:
       name: Joseph Carlos Magallanes Nolazco
@@ -40,8 +36,7 @@ springdoc:
   swagger-ui:
     #    enabled: true
     path: index.html
-
 #logging:
 #  level:
-#    root: DEBUG
+#    root: WARN
 #    com.nttdata.customer: DEBUG
