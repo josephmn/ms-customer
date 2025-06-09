@@ -31,7 +31,14 @@ Esta es una version de un API creada con mongo DB, usando programacion reactiva 
         "lastName": "Magallanes",
         "documentType": "DNI",
         "documentNumber": "77885471",
-        "clientType": "STAFF"
+        "clientType": "STAFF",
+        "address": "Av. Siempre viva #34",
+        "email": "usuario@ejemplo.com",
+        "phones": [
+           "+51987654321",
+           "+54976453245",
+           "+189764532"
+        ]
     }
     ````
 - **PUT - update customer with body in JSON and variable path (6685db4a7ac9347f4ba6b975):**
@@ -46,7 +53,14 @@ Esta es una version de un API creada con mongo DB, usando programacion reactiva 
         "reason": "",
         "documentType": "DNI",
         "documentNumber": "77885471",
-        "clientType": "STAFF"
+        "clientType": "STAFF",
+        "address": "Av. Siempre viva #34",
+        "email": "usuario@ejemplo.com",
+        "phones": [
+           "+51987654321",
+           "+54976453245",
+           "+189764532"
+        ]
     }
     ````
 - **DELETE - delete customer with variable path (6685db4a7ac9347f4ba6b975):**
