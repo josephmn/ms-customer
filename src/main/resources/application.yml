@@ -14,6 +14,12 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI}
+  r2dbc:
+    url: ${MYSQL_HOST}
+    username: ${USERNAME}
+    password: ${PASSWORD}
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
   output:
     ansi:
       enabled: ALWAYS

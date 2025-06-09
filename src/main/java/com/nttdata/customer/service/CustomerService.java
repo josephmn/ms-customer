@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 public interface CustomerService {
     Flux<CustomerResponse> getCustomer();
     Mono<CustomerResponse> getCustomerById(String clientId);
+    Mono<CustomerResponse> getCustomerByDocumentNumber(String number);
     Mono<CustomerResponse> createCustomer(CustomerRequest customerDTO);
     Mono<CustomerResponse> updateCustomerById(String clientId, CustomerRequest customerDTO);
     Mono<ResponseDTO> deleteCustomerById(String clientId);

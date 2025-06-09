@@ -118,6 +118,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseDTO'
+  /customer/document/{number}:
+    get:
+      tags:
+        - Customer
+      summary: Get customer by documentNumber
+      description: Get customer.
+      operationId: getCustomerByDocumentNumber
+      parameters:
+        - name: number
+          in: path
+          description: find by documentNumber
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: success get
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
 components:
   schemas:
     CustomerRequest:

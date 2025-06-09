@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 /**
  * CustomerController is a REST controller that handles customer-related API requests.
  * It implements the CustomerApi interface and uses the CustomerService to perform operations.
+ *
  * @author Joseph Magallanes
  * @since 2025-05-23
  */
@@ -31,39 +32,47 @@ public class CustomerController implements CustomerApi {
     @Override
     public Mono<ResponseEntity<Flux<CustomerResponse>>> getCustomer(ServerWebExchange exchange) {
         return Mono.just(ResponseEntity.ok(this.customerService.getCustomer()))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> getCustomerById(
-            @PathVariable("clientId") String clientId, ServerWebExchange exchange) {
+        @PathVariable("clientId") String clientId, ServerWebExchange exchange) {
         return this.customerService.getCustomerById(clientId)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok)
+            .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public Mono<ResponseEntity<CustomerResponse>> getCustomerByDocumentNumber(
+        @PathVariable("number") String number, ServerWebExchange exchange) {
+        return this.customerService.getCustomerByDocumentNumber(number)
+            .map(ResponseEntity::ok)
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> createCustomer(
-            @RequestBody Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
+        @RequestBody Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
         return customerRequest.flatMap(this.customerService::createCustomer)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok)
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<CustomerResponse>> updateCustomerById(
-            @PathVariable("clientId") String clientId,
-            @RequestBody Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
+        @PathVariable("clientId") String clientId,
+        @RequestBody Mono<CustomerRequest> customerRequest, ServerWebExchange exchange) {
         return customerRequest.flatMap(dto -> this.customerService.updateCustomerById(clientId, dto))
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok)
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Override
     public Mono<ResponseEntity<ResponseDTO>> deleteCustomerById(
-            @PathVariable("clientId") String clientId, ServerWebExchange exchange) {
+        @PathVariable("clientId") String clientId, ServerWebExchange exchange) {
         return this.customerService.deleteCustomerById(clientId)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok)
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }
