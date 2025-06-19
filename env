@@ -1,0 +1,6 @@
+# Rename file to .env
+MONGODB_URI= tu_url_mongodb
+
+MYSQL_HOST=url_r2dbc_mysql
+MYSQL_USER=tu_user_mysql
+MYSQL_PASSWORD=tu_password_mysql

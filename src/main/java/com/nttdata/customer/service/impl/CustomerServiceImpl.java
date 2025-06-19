@@ -1,6 +1,5 @@
 package com.nttdata.customer.service.impl;
 
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.nttdata.customer.datavalidation.chain.DataEmail;
 import com.nttdata.customer.datavalidation.chain.DataHandler;

@@ -1,0 +1,46 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ms-customer
+    version: "@project.version@"
+  profiles:
+    active: prod
+  cloud:
+    vault:
+      enabled: true
+      host: ${VAULT_HOST:localhost}
+      port: ${VAULT_PORT:8200}
+      scheme: http
+      authentication: TOKEN
+      token: 00000000-0000-0000-0000-000000000000
+      kv:
+        enabled: true
+        application-name: ms-customer
+        backend: secret
+        version: 2
+  output:
+    ansi:
+      enabled: ALWAYS
+openapi:
+  info:
+    github:
+      url: https://github.com/josephmn/ms-customer.git
+    terms: http://swagger.io/terms/
+    contact:
+      name: Joseph Carlos Magallanes Nolazco
+      email: josephcarlos.jcmn@gmail.com
+      url: https://www.linkedin.com/in/joseph-magallanes-nolazco/
+    servers:
+      url: http://localhost:8081
+      description: Local server Swagger
+
+springdoc:
+  swagger-ui:
+    #    enabled: true
+    path: index.html
+#logging:
+#  level:
+#    root: WARN
+#    com.nttdata.customer: DEBUG

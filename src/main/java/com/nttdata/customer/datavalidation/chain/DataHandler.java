@@ -1,6 +1,5 @@
 package com.nttdata.customer.datavalidation.chain;
 
-import java.util.Optional;
 import com.nttdata.customer.persistence.entity.PersonEntity;
 import reactor.core.publisher.Mono;
 
