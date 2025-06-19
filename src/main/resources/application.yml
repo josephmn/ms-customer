@@ -16,8 +16,8 @@ spring:
       uri: ${MONGODB_URI}
   r2dbc:
     url: ${MYSQL_HOST}
-    username: ${USERNAME}
-    password: ${PASSWORD}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
   output:

@@ -1,12 +1,12 @@
 package com.nttdata.customer.utils.constans;
 
 /**
- * ConstansConfig.
+ * ConstantsConfig.
  *
  * @author Joseph Magallanes
  * @since 2025-05-23
  */
-public class ConstansConfig {
+public class ConstantsConfig {
 
     // Id for reason
     public static final int ID_REASON = 3;

@@ -8,7 +8,7 @@ import com.nttdata.customer.model.CustomerResponse;
 import com.nttdata.customer.persistence.entity.CustomerEntity;
 import com.nttdata.customer.persistence.entity.enums.ClientType;
 import com.nttdata.customer.persistence.entity.enums.DocumentType;
-import com.nttdata.customer.utils.constans.ConstansConfig;
+import com.nttdata.customer.utils.constans.ConstantsConfig;
 
 /**
  * AppUtils.
@@ -120,10 +120,10 @@ public class AppUtils {
             CustomerEntity customerEntity) {
         if (!customerRequest.getDocumentType().getValue().equals("DNI")) {
             if (customerRequest.getReason() == null || customerRequest.getReason().isEmpty()) {
-                errors.put(ConstansConfig.ID_REASON, "Reason is not null or empty");
+                errors.put(ConstantsConfig.ID_REASON, "Reason is not null or empty");
             }
             else if (!customerRequest.getReason().matches("^[a-zA-Z0-9 &.,/\\-()°]+$")) {
-                errors.put(ConstansConfig.ID_REASON, "Reason can only contain letters, numbers, " +
+                errors.put(ConstantsConfig.ID_REASON, "Reason can only contain letters, numbers, " +
                     "and special characters (&.,/\\-()°)");
             }
             else {
@@ -144,7 +144,7 @@ public class AppUtils {
             customerEntity.setDocumentType(documentType);
         }
         catch (IllegalArgumentException e) {
-            errors.put(ConstansConfig.ID_DOCUMENT_TYPE, "Invalid document type: "
+            errors.put(ConstantsConfig.ID_DOCUMENT_TYPE, "Invalid document type: "
                 + customerRequest.getDocumentType().getValue());
         }
     }
@@ -156,7 +156,7 @@ public class AppUtils {
         final String documentNumber = customerRequest.getDocumentNumber();
         if (customerRequest.getDocumentType().getValue().equals("DNI")) {
             if (documentNumber == null || !documentNumber.matches("\\d{8}")) {
-                errors.put(ConstansConfig.ID_DOCUMENT_NUMBER, "Document number must be exactly 8 " +
+                errors.put(ConstantsConfig.ID_DOCUMENT_NUMBER, "Document number must be exactly 8 " +
                     "digits for DNI and contain only numbers");
             }
             else {
@@ -165,7 +165,7 @@ public class AppUtils {
         }
         else {
             if (documentNumber == null || !documentNumber.matches("\\d{11}")) {
-                errors.put(ConstansConfig.ID_DOCUMENT_NUMBER, "Document number must be exactly 11 digits " +
+                errors.put(ConstantsConfig.ID_DOCUMENT_NUMBER, "Document number must be exactly 11 digits " +
                     "for RUC and contain only numbers");
             }
             else {
@@ -186,7 +186,7 @@ public class AppUtils {
         }
 
         if (!customerEntity.getClientType().getValue().equals(customerRequest.getClientType().getValue())) {
-            errors.put(ConstansConfig.ID_CLIENT_TYPE, "Invalid client type for the given document type. Expected: "
+            errors.put(ConstantsConfig.ID_CLIENT_TYPE, "Invalid client type for the given document type. Expected: "
                     + customerEntity.getClientType().getValue());
         }
     }
