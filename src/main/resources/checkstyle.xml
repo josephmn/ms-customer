@@ -46,15 +46,15 @@
             <property name="authorFormat" value="\S"/>
             <property name="allowMissingParamTags" value="true"/>
             <property name="allowUnknownTags" value="false"/>
-<!--            <property name="tokens" value="INTERFACE_DEF, CLASS_DEF, ENUM_DEF, ANNOTATION_DEF"/>-->
+            <!--            <property name="tokens" value="INTERFACE_DEF, CLASS_DEF, ENUM_DEF, ANNOTATION_DEF"/>-->
         </module>
         <!-- agregar comentarios a las variables -->
         <!--<module name="JavadocVariable"/>-->
 
         <module name="MissingJavadocMethod">
-            <property name="scope" value="public"/>
             <property name="allowMissingPropertyJavadoc" value="true"/>
             <property name="allowedAnnotations" value="Override,Inject,Provides"/>
+            <property name="scope" value="public"/>
             <property name="ignoreMethodNamesRegex" value="^(is|find|exists|get|update|delete|set|remove|add|new|create|main).*$"/>
         </module>
         <module name="MissingJavadocPackage"/>
@@ -102,7 +102,13 @@
         <module name="RedundantImport"/>
 
         <module name="ImportOrder">
+            <property name="sortStaticImportsAlphabetically" value="true"/>
             <property name="groups" value="java, javax, org, com"/>
+            <property name="ordered" value="true"/>
+            <property name="staticGroups" value="*, java, javax, org, com"/>
+            <property name="option" value="top"/>
+            <property name="separatedStaticGroups" value="true"/>
+            <message key="import.ordering" value="Orden incorrecto para el import ''{0}''. Se debe respetar el orden siguiente: static \n java, javax, org, com, * y en orden alfabético."/>
         </module>
 
         <module name="WhitespaceAfter"/>
