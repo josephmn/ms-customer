@@ -36,7 +36,10 @@ public class OpenApiConfig {
                         .description("This is the version of an API created with MongoDB, reactive programming, " +
                                 "and functional programming for customer maintenance.\n"
                                 + "\nSome useful links:\n"
-                                + "\nThe repository in GitHub: " + applicationProperties.getGithubUrl())
+                                + "\n- [The repository in GitHub](" + applicationProperties.getGithub().getUrl() + ")"
+                                + "\n- [The source API definition for Banking Customer]("
+                                + applicationProperties.getGithub().getDefinition() + ")"
+                        )
                         .termsOfService(applicationProperties.getTerms())
                         .contact(new Contact()
                                 .name(applicationProperties.getContact().getName())

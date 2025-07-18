@@ -19,10 +19,22 @@ import lombok.Setter;
 @Setter
 public class ApplicationProperties {
 
-    private String githubUrl;
+    private Github github;
     private String terms;
     private Contact contact;
     private Servers servers;
+
+    /**
+     * Returns the GitHub information for the API.
+     *
+     * @return Github object containing URL and definition.
+     */
+    @Getter
+    @Setter
+    public static class Github {
+        private String url;
+        private String definition;
+    }
 
     /**
      * Returns the contact information for the API.

@@ -27,6 +27,7 @@ openapi:
   info:
     github:
       url: https://github.com/josephmn/ms-customer.git
+      definition: https://github.com/josephmn/ms-customer/blob/main/src/main/resources/swagger/openapi.yaml
     terms: http://swagger.io/terms/
     contact:
       name: Joseph Carlos Magallanes Nolazco
